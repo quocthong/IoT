@@ -1,4 +1,4 @@
-package fhffm.iot.gateway.LeshanClient;
+package fhffm.iot.gateway;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -15,7 +15,6 @@ public class Collector {
 	public static class UltrasonicResource extends CoapResource {
 
 	    public String value = "0";
-
 	    //Define resource as observable
 	    public UltrasonicResource() {
 	        super("Ultrasonic");
@@ -34,17 +33,21 @@ public class Collector {
 	    @Override
 	    public void handlePUT(CoapExchange exchange) {
 	        String payload = exchange.getRequestText();
-	        System.out.println(payload + " cm");
+	        
 
 	        try {
 	            exchange.respond(CHANGED, payload);
 	            value = new String(payload);
+	            IntermediateBroker.setSensorValue(Double.parseDouble(value));
 	            changed();
+	    	  	    	    
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            exchange.respond(BAD_REQUEST, "Invalid String");
 	        }
+//	        System.out.println(a.getSensorValue() + " cm");
 	    }
+	
 	}
 	
 	
