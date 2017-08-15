@@ -1,2 +1,3 @@
-/home/cloud/iot-workspace/device/src/main/java/fhffm/iot/device/UltrasonicSensor.java
+/home/cloud/iot-workspace/device/src/main/java/fhffm/iot/device/UltrasonicSensorMQTT.java
 /home/cloud/iot-workspace/device/src/main/java/fhffm/iot/device/MainProgram.java
+/home/cloud/iot-workspace/device/src/main/java/fhffm/iot/device/UltrasonicSensorCoAP.java

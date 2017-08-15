@@ -1,7 +1,6 @@
 package fhffm.iot.device;
 
 import org.eclipse.californium.core.CoapClient;
-import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 
 import com.pi4j.io.gpio.GpioController;
@@ -11,8 +10,9 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
 
-public class UltrasonicSensor {
-    CoapClient client = new CoapClient("coap://192.168.50.31:5683/Ultrasonic");
+public class UltrasonicSensorCoAP {
+    CoapClient client = new CoapClient("coap://192.168.50.50:5683/Ultrasonic");
+
 	//GPIO Pins
 	private static GpioPinDigitalOutput sensorTriggerPin ;
 	private static GpioPinDigitalInput sensorEchoPin ;
@@ -45,13 +45,10 @@ public class UltrasonicSensor {
 			distance = (((endTime-startTime)/1e3)/2) / 29.1;
 			System.out.println("Distance :"+ distance +" cm"); 
 	        
-			CoapResponse resp = client.put(Double.toString(distance), MediaTypeRegistry.TEXT_PLAIN);
-//			System.out.println(resp.isSuccess());
-//			System.out.println(resp.getResponseText());
-
+			client.put(Double.toString(distance), MediaTypeRegistry.TEXT_PLAIN);
 			Thread.sleep(1000);
 			
-		} catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 			e.printStackTrace();
 			}
 		}

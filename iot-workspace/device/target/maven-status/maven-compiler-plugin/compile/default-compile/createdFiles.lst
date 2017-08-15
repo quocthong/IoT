@@ -1,2 +1,3 @@
-fhffm/iot/device/UltrasonicSensor.class
+fhffm/iot/device/UltrasonicSensorMQTT.class
 fhffm/iot/device/MainProgram.class
+fhffm/iot/device/UltrasonicSensorCoAP.class
