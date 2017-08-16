@@ -51,6 +51,7 @@ public class Gateway{
         String secureLocalAddress = null;
         int secureLocalPort = 0;
         boolean needbootstrap = false;
+        
 	    //Start CoAP server for collecting data from device
 		//Initiate CoAP server on 5683 port
         CoapServer server = new CoapServer();
