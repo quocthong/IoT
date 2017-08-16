@@ -57,14 +57,7 @@ public class UltrasonicLwm2mObject extends BaseInstanceEnabler {
         }, 2, 5, TimeUnit.SECONDS);
 	}
 
-    public UltrasonicLwm2mObject( ) {
-////    	mockDistance = new retrieveDistance();
-////    	scheduler = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("Temperature Sensor"));
-//    	scheduler = Executors.newScheduledThreadPool(1);
-//    	
-////    	scheduleLoopOnce();
-//    	scheduleLoop();
-    	
+    public UltrasonicLwm2mObject( ) {   	
     	this.scheduler = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("Distance Sensor"));
         scheduler.scheduleAtFixedRate(new Runnable() {
 
@@ -73,7 +66,6 @@ public class UltrasonicLwm2mObject extends BaseInstanceEnabler {
             	adjustDistance();
             }
         }, 2, 2, TimeUnit.SECONDS);
-    	
     }
     
     public ReadResponse read(int resourceId) {

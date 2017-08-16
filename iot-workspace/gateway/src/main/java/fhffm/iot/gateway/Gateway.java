@@ -21,9 +21,9 @@ import org.eclipse.leshan.core.model.ObjectLoader;
 import org.eclipse.leshan.core.model.ObjectModel;
 import org.eclipse.leshan.core.request.BindingMode;
 import org.eclipse.leshan.util.Hex;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import fhffm.iot.gateway.Collector.UltrasonicResource;
 
@@ -37,9 +37,8 @@ public class Gateway{
 
     private static final int OBJECT_ID_DISTANCE_SENSOR = 3303;
     private final static String DEFAULT_ENDPOINT = "Ultrasonic HC-SR04";
-//	private final static String LeshanServerURI = "coap://leshan.eclipse.org:5683";
-	private final static String LeshanServerURI = "coaps://leshan.eclipse.org:5684";
-	private final static String pskIdentityDefault = "mypskid";
+    private final static String LeshanServerURI = "coaps://192.168.50.31:5684";
+    private final static String pskIdentityDefault = "mypskid";
 	private final static String pskKeyDefault = "aabbccdd";
 	
 	public static void main(String[] args) {
@@ -52,19 +51,25 @@ public class Gateway{
         String secureLocalAddress = null;
         int secureLocalPort = 0;
         boolean needbootstrap = false;
-//	    //Start CoAP server for collecting data from device
-//		//Initiate CoAP server on 5683 port
-//        CoapServer server = new CoapServer();
-//        
-//        //Create new resource
-//        server.add(new UltrasonicResource());
-//
-//        //Start the server
-//        server.start();
+	    //Start CoAP server for collecting data from device
+		//Initiate CoAP server on 5683 port
+        CoapServer server = new CoapServer();
         
-       
+        //Create new resource
+        server.add(new UltrasonicResource());
+
+        //Start the server
+        server.start();
         
-        //Start Leshan client to sen//d data to server
+        try {
+			new MqttReceiver().run();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (MqttException e) {
+			e.printStackTrace();
+		}
+        
+        //Start Leshan client to send data to server
         try {
 			endpoint = InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e) {
@@ -84,7 +89,7 @@ public class Gateway{
             byte[] pskKey) {
 		
 		// Initialize LWM2M model
-		List<ObjectModel> models = ObjectLoader.loadDefault();
+		List<ObjectModel> models = ObjectLoader.loadDefault();      
         models.addAll(ObjectLoader.loadDdfResources("/models", modelPaths));
 		
         // Initialize object list
